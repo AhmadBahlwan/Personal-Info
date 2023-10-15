@@ -27,4 +27,9 @@ public abstract class Person extends AbstractAddress {
         this.nationalNumber = nationalNumber;
         this.birthdate = birthdate;
     }
+
+    @Transient
+    public String getFullName() {
+        return firstName + " " + middleName + " " + lastName;
+    }
 }

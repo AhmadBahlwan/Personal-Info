@@ -29,6 +29,9 @@ public class Parent extends Person{
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Member> familyMembers = new HashSet<>();
 
+    @Transient
+    protected Boolean isParent = true;
+
     @Builder
     public Parent(String firstName, String middleName, String lastName, String nationalNumber, Date birthdate, String phoneNumber, String alternatePhoneNumber, String familyBookId, String address, Set<Member> familyMembers) {
         super(firstName, middleName, lastName, nationalNumber, birthdate);
@@ -39,6 +42,7 @@ public class Parent extends Person{
         if (familyMembers != null) {
             this.familyMembers.addAll(familyMembers);
         }
+        this.isParent = true;
     }
 
     public void addFamilyMember(Member member) {

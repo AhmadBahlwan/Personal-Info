@@ -2,6 +2,7 @@ package bahlawan.alwafidin.personalInfo.services;
 
 import bahlawan.alwafidin.personalInfo.entities.Member;
 import bahlawan.alwafidin.personalInfo.entities.Parent;
+import bahlawan.alwafidin.personalInfo.entities.Person;
 import bahlawan.alwafidin.personalInfo.extra.ExcelUtility;
 import bahlawan.alwafidin.personalInfo.repositories.MemberRepository;
 import bahlawan.alwafidin.personalInfo.repositories.ParentRepository;
@@ -11,9 +12,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -21,6 +25,8 @@ import java.util.*;
 @Service
 public class ParentService {
     private static final int FIRST_MEMBER_INDEX = 12;
+
+    private static final int PERSONS_BY_PAGE = 20;
     @Autowired
     private ParentRepository repo;
 
@@ -72,5 +78,16 @@ public class ParentService {
                 throw new RuntimeException(ex);
             }
         }
+    }
+
+    public Page<Parent> listByPage(Integer pageNumber, String sortField, String sortDir) {
+        Pageable pageable = createPageable(pageNumber, sortField, sortDir);
+        return repo.findAll(pageable);
+    }
+
+    private Pageable createPageable(int pageNum, String sortField, String sortDir) {
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+        return PageRequest.of(pageNum - 1, PERSONS_BY_PAGE, sort);
     }
 }

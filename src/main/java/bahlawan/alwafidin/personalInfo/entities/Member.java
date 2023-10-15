@@ -3,6 +3,7 @@ package bahlawan.alwafidin.personalInfo.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,9 @@ public class Member extends Person{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Parent parent;
+
+    @Transient
+    protected Boolean isParent = false;
 
     @Builder
     public Member(String firstName, String middleName, String lastName, String nationalNumber, Date birthdate, Parent parent) {
