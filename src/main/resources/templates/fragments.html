@@ -174,7 +174,7 @@
 </div>
 
 <div th:fragment="format_time(dateTime)" th:remove="tag">
-  <span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+  <td th:text="${#dates.format(dateTime, 'yyyy-MM-dd')}"></td>
 </div>
 
 <div th:fragment="currency_input(amount)" th:remove="tag">

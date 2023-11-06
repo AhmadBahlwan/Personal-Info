@@ -1,5 +1,6 @@
 package bahlawan.alwafidin.personalInfo.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
@@ -36,5 +37,9 @@ public class Member extends Person{
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+    @Transient
+    public String getAddress() {
+        return this.parent.getAddress();
     }
 }

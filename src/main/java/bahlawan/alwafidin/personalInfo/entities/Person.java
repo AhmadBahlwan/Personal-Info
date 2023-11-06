@@ -1,5 +1,6 @@
 package bahlawan.alwafidin.personalInfo.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,11 +21,20 @@ public abstract class Person extends AbstractAddress {
     private String nationalNumber;
 
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthdate;
 
     public Person(String firstName, String middleName, String lastName, String nationalNumber, Date birthdate) {
         super(firstName, middleName, lastName);
         this.nationalNumber = nationalNumber;
+        this.birthdate = birthdate;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 

@@ -30,6 +30,7 @@
         <th>رقم الجوال</th>
         <th>رقم دفتر العائلة</th>
         <th>العنوان</th>
+        <th th:replace="fragments :: column_link('birthdate', 'تاريخ الميلاد', 'none')">تاريخ الميلاد</th>
         <th>Actions</th>
       </tr>
 
@@ -40,9 +41,10 @@
         <td class="hideable-column">[[${user.firstName}]]</td>
         <td>[[${user.middleName}]]</td>
         <td>[[${user.lastName}]]</td>
-        <td>[[${user.phoneNumber}]]</td>
-        <td>[[${user.familyBookId}]]</td>
+        <td>[[${user.isParent} ? ${user.phoneNumber} : '']]</td>
+        <td>[[${user.isParent} ? ${user.familyBookId} : '']]</td>
         <td>[[${user.address}]]</td>
+        <td th:replace="fragments :: format_time(${user.birthdate})"></td>
 <!--        <td>-->
 <!--          <div th:replace="fragments :: status(${user.isParent}, 'user', '/users/' + ${user.id})"></div>-->
 <!--        </td>-->
@@ -83,7 +85,7 @@
 <script th:src="@{/js/common_list.js}"></script>
 
 <script title="text/javascript">
-    moduleURL = "[[@{/users}]]";
+    moduleURL = "[[@{/persons}]]";
 
 	$(document).ready(function() {
 		$(".link-delete").on("click", function(e) {
