@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" dir="rtl">
-<head th:replace="fragments :: page_head('Users - Shopping Admin', 'none')"></head>
+<head th:replace="fragments :: page_head('Persons - Family info', 'none')"></head>
 <body>
 <div class="container-fluid">
   <div th:replace="navigation :: menu"></div>
   <div>
-    <h2>Manage Users</h2>
+    <h2>Manage Persons</h2>
     <a th:href="@{/users/new}" class="fas fa-user-plus fa-2x icon-dark"></a>
     &nbsp;&nbsp;
     <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark"></a>
@@ -36,22 +36,22 @@
 
       </thead>
       <tbody>
-      <tr th:each="user : ${listUsers}" class="text-center">
-        <td class="hideable-column">[[${user.nationalNumber}]]</td>
-        <td class="hideable-column">[[${user.firstName}]]</td>
-        <td>[[${user.middleName}]]</td>
-        <td>[[${user.lastName}]]</td>
-        <td>[[${user.isParent} ? ${user.phoneNumber} : '']]</td>
-        <td>[[${user.isParent} ? ${user.familyBookId} : '']]</td>
-        <td>[[${user.address}]]</td>
-        <td th:replace="fragments :: format_time(${user.birthdate})"></td>
+      <tr th:each="person : ${listPersons}" class="text-center">
+        <td class="hideable-column">[[${person.nationalNumber}]]</td>
+        <td class="hideable-column">[[${person.firstName}]]</td>
+        <td>[[${person.middleName}]]</td>
+        <td>[[${person.lastName}]]</td>
+        <td>[[${person.isParent} ? ${person.phoneNumber} : '']]</td>
+        <td>[[${person.isParent} ? ${person.familyBookId} : '']]</td>
+        <td>[[${person.address}]]</td>
+        <td th:replace="fragments :: format_time(${person.birthdate})"></td>
 <!--        <td>-->
 <!--          <div th:replace="fragments :: status(${user.isParent}, 'user', '/users/' + ${user.id})"></div>-->
 <!--        </td>-->
         <td>
-          <div th:replace="fragments :: edit('user', '/users/edit/' + ${user.id})"></div>
+          <div th:replace="fragments :: edit('user', '/users/edit/' + ${person.id})"></div>
           &nbsp;&nbsp;
-          <div th:replace="fragments :: delete('user', ${user.id}, '/users/delete/' + ${user.id}, true)"></div>
+          <div th:replace="fragments :: delete('user', ${person.id}, '/users/delete/' + ${person.id}, true)"></div>
         </td>
       </tr>
       </tbody>
@@ -59,22 +59,22 @@
   </div>
 
   <div class="less-details">
-    <div th:each="user : ${users}" class="row m-1">
+    <div th:each="person : ${listPersons}" class="row m-1">
       <div class="col-8">
-        <div>[[${user.fullName}]]</div>
+        <div>[[${person.fullName}]]</div>
         <div></div>
         <div class="mt-1">
-          <div th:replace="fragments :: status(${user.isParent}, 'user', '/users/' + ${user.id})"></div>
+          <div th:replace="fragments :: status(${person.isParent}, 'user', '/users/' + ${person.id})"></div>
           &nbsp;
-          <div th:replace="fragments :: edit('user', '/users/edit/' + ${user.id})"></div>
+          <div th:replace="fragments :: edit('user', '/users/edit/' + ${person.id})"></div>
           &nbsp;
-          <div th:replace="fragments :: delete('user', ${user.id}, '/users/delete/' + ${user.id}, true)"></div>
+          <div th:replace="fragments :: delete('user', ${person.id}, '/users/delete/' + ${person.id}, true)"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div th:replace="fragments :: pagination('users')"></div>
+  <div th:replace="fragments :: pagination('persons')"></div>
 
   <div th:replace="modal_fragment :: confirm_modal"></div>
 

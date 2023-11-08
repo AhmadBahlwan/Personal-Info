@@ -17,7 +17,7 @@ public class PersonController {
     PersonService personService;
 
     @GetMapping("/persons")
-    public String listByPage(@RequestParam(defaultValue = "asc") String sortDirection, Model model) {
+    public String listFirstPage(@RequestParam(defaultValue = "asc") String sortDirection, Model model) {
         return listByPage(1, "firstName", sortDirection, null, model);
     }
 
@@ -41,7 +41,7 @@ public class PersonController {
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
         model.addAttribute("totalElements", page.getTotalElements());
-        model.addAttribute("listUsers", page.getContent());
+        model.addAttribute("listPersons", page.getContent());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("reversedSortDir", reversedSortDir);
@@ -53,12 +53,16 @@ public class PersonController {
 
     @GetMapping("/search")
     public String searchFirstPage(String keyword, Model model) {
-        return searchByPage(keyword, 1, model);
+        return searchByPage(keyword, 1, "asc", "firstName", model);
     }
 
     @GetMapping("/search/page/{pageNumber}")
-    public String searchByPage(String keyword, @PathVariable("pageNumber") int pageNumber, Model model) {
-        Page<Person> page = personService.search(keyword, pageNumber);
+    public String searchByPage(String keyword,
+                               @PathVariable("pageNumber") int pageNumber,
+                               @RequestParam String sortField,
+                               @RequestParam String sortDirection,
+                               Model model) {
+        Page<Person> page = personService.search(keyword, pageNumber, sortField, sortDirection);
 
         int pageSize = page.getSize();
 
@@ -73,7 +77,7 @@ public class PersonController {
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
         model.addAttribute("totalElements", page.getTotalElements());
-        model.addAttribute("listUsers", page.getContent());
+        model.addAttribute("listPersons", page.getContent());
         model.addAttribute("moduleURL", "/persons");
 
         return "persons";
